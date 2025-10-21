@@ -1,8 +1,6 @@
-from pydantic import BaseModel
-from DataBase.Parameters import *
+from pydantic_settings import BaseSettings, SettingsConfigDict
 
-
-class Settings(BaseModel):
+class Settings(BaseSettings):
 
     host: str
     port: str
@@ -10,8 +8,12 @@ class Settings(BaseModel):
     db: str
     password: str
 
+    model_config = SettingsConfigDict(
+        env_file = ".env"
+    )
+
     def ASYNC_ENGINE_CREATE(self):
         return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.db}"
 
 
-settings = Settings(host=host, port=port, user=user, db=db, password=password)
+settings = Settings()
