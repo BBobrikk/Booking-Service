@@ -15,12 +15,12 @@ class RoomsORM(Base):
     beds: Mapped[int]
     booking_start: Mapped[date]
     booking_end: Mapped[date]
-    user_id : Mapped[int] = mapped_column(ForeignKey(UsersORM.user_id))
-    user : Mapped["UsersORM"] = relationship(back_populates = "rooms")
+    user_id: Mapped[int] = mapped_column(ForeignKey(UsersORM.user_id))
+    user: Mapped["UsersORM"] = relationship(back_populates="rooms")
 
     __table_args__ = (
-          CheckConstraint(
-            "grade in ('standard', 'luxe', 'president')", "CHK_grade_valid"),
-          CheckConstraint(
-                  "booking_start <= booking_end", "CHK_date_valid")
-        )
+        CheckConstraint(
+            "grade in ('standard', 'luxe', 'president')", "CHK_grade_valid"
+        ),
+        CheckConstraint("booking_start <= booking_end", "CHK_date_valid"),
+    )

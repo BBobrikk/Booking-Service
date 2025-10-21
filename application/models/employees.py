@@ -15,9 +15,8 @@ class EmployeesORM(Base):
 
     __table_args__ = (
         CheckConstraint(
-            "phone LIKE '+7__________' or phone LIKE '8__________'", "CHK_phone_valid"),
-        CheckConstraint(
-            "age BETWEEN 18 and 70", "CHK_age_valid"),
-        CheckConstraint(
-            "salary > 0", "CHK_salary_valid")
+            "phone LIKE '+7__________' or phone LIKE '8__________'", "CHK_phone_valid"
+        ),
+        CheckConstraint("age BETWEEN 18 and 70", "CHK_age_valid"),
+        CheckConstraint("salary > 0", "CHK_salary_valid"),
     )

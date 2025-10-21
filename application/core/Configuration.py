@@ -1,5 +1,6 @@
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+
 class Settings(BaseSettings):
 
     host: str
@@ -8,9 +9,7 @@ class Settings(BaseSettings):
     db: str
     password: str
 
-    model_config = SettingsConfigDict(
-        env_file = ".env"
-    )
+    model_config = SettingsConfigDict(env_file=".env")
 
     def ASYNC_ENGINE_CREATE(self):
         return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.db}"
