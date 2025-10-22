@@ -1,7 +1,6 @@
 from sqlalchemy import CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from application.core.Connection import Base
-from application.models.rooms import RoomsORM
+from application.core.connection import Base
 
 
 class UsersORM(Base):
@@ -12,7 +11,7 @@ class UsersORM(Base):
     name: Mapped[str]
     phone: Mapped[str]
     mail: Mapped[str]
-    rooms: Mapped[list["RoomsORM"]] = relationship(back_populates="user")
+    bookings: Mapped[list["BookingsORM"]] = relationship(back_populates="user")
 
     __table_args__ = (
         CheckConstraint(

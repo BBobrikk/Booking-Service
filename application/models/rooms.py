@@ -1,8 +1,7 @@
 from datetime import date
 from sqlalchemy import ForeignKey, CheckConstraint
 from sqlalchemy.orm import Mapped, mapped_column, relationship
-from application.core.Connection import Base
-from application.models.users import UsersORM
+from application.core.connection import Base
 
 
 class RoomsORM(Base):
@@ -13,14 +12,10 @@ class RoomsORM(Base):
     number: Mapped[int]
     grade: Mapped[str]
     beds: Mapped[int]
-    booking_start: Mapped[date]
-    booking_end: Mapped[date]
-    user_id: Mapped[int] = mapped_column(ForeignKey(UsersORM.user_id))
-    user: Mapped["UsersORM"] = relationship(back_populates="rooms")
+    bookings: Mapped[list["BookingsORM"]] = relationship(back_populates="room")
 
     __table_args__ = (
         CheckConstraint(
             "grade in ('standard', 'luxe', 'president')", "CHK_grade_valid"
         ),
-        CheckConstraint("booking_start <= booking_end", "CHK_date_valid"),
     )

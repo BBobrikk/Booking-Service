@@ -1,6 +1,6 @@
 import asyncio
-from application.core.Connection import async_engine
-from application.core.Connection import Base
+from application.core.connection import async_engine
+from application.core.connection import Base
 
 
 async def setup():
