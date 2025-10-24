@@ -8,7 +8,7 @@ class UsersORM(Base):
     __tablename__ = "Users"
 
     user_id: Mapped[int] = mapped_column(primary_key=True)
-    name: Mapped[str]
+    name: Mapped[str] = mapped_column(unique=True)
     phone: Mapped[str]
     mail: Mapped[str]
     bookings: Mapped[list["BookingsORM"]] = relationship(back_populates="user")

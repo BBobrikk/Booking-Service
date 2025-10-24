@@ -16,5 +16,5 @@ class BookingCreate(BookingBase):
     room_id: int
 
 
-class RoomRead(BookingBase):
-    employee_id: int
+class BookingRead(BookingCreate):
+    booking_id: int

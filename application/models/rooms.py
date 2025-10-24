@@ -9,7 +9,7 @@ class RoomsORM(Base):
     __tablename__ = "Rooms"
 
     room_id: Mapped[int] = mapped_column(primary_key=True)
-    number: Mapped[int]
+    number: Mapped[int] = mapped_column(unique=True)
     grade: Mapped[str]
     beds: Mapped[int]
     bookings: Mapped[list["BookingsORM"]] = relationship(back_populates="room")

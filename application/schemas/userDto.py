@@ -8,4 +8,4 @@ class UserBase(BaseModel):
 
 
 class UserRead(UserBase):
-    room_id: int
+    user_id: int
