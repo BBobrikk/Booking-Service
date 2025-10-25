@@ -1,10 +1,14 @@
 from sqlalchemy.ext.asyncio import AsyncSession
-from application.models.bookings import BookingsORM
+from application.models import BookingsORM
 from application.schemas.bookingDto import BookingCreate
+
+
 from application.repositories.bookings_repo import (
     add_booking,
     get_user_bookings,
     delete_booking,
+    get_booking,
+    get_all_bookings
 )
 from application.repositories.room_repo import get_available_rooms
 
@@ -32,3 +36,15 @@ async def check_user_bookings(session: AsyncSession, user_id: int):
     if bookings:
         return bookings
     raise ValueError("Нет забронированных комнат")
+
+async def check_bookings(session : AsyncSession):
+    bookings = await get_all_bookings(session)
+    if bookings:
+        return bookings
+    raise ValueError("Бронирования не найдены")
+
+async def check_booking(session: AsyncSession, booking_id):
+    booking = await get_booking(session, booking_id)
+    if booking:
+        return booking
+    raise ValueError("Бронирование не найдено")

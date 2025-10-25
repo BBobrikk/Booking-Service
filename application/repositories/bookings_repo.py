@@ -1,7 +1,6 @@
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
-from application.core.connection import async_session
-from application.models.bookings import BookingsORM
+from application.models import BookingsORM
 from application.schemas.bookingDto import BookingCreate
 
 
@@ -17,8 +16,8 @@ async def add_booking(session: AsyncSession, booking_data: BookingCreate):
         room_id=booking_data.room_id,
         price=booking_data.price,
         code=booking_data.code,
-        start=booking_data.start,
-        end=booking_data.end,
+        start_date=booking_data.start,
+        end_date=booking_data.end,
         wishes=booking_data.wishes,
     )
     session.add(booking)

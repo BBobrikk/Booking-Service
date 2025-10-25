@@ -6,7 +6,7 @@ from application.repositories.user_repo import (
     del_user,
     get_user_by_name,
 )
-from application.models.users import UsersORM
+
 from application.schemas.userDto import UserBase
 
 
@@ -17,8 +17,8 @@ async def registration_user(session: AsyncSession, user_data: UserBase):
     await add_user(session, user_data)
 
 
-async def find_user(session: AsyncSession, user_id: int):
-    user = await get_user(session, user_id)
+async def find_user(session: AsyncSession, username : str):
+    user = await get_user_by_name(session, username)
     if user:
         return user
     raise ValueError("Пользователь не найден")
@@ -32,4 +32,9 @@ async def check_users(session: AsyncSession):
 
 
 async def remove_user(session: AsyncSession, user_id: int):
-    pass
+    user = await get_user(session, user_id)
+    if user:
+        await del_user(session, user_id)
+    raise ValueError("Пользователь не найден")
+
+

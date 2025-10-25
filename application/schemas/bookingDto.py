@@ -1,5 +1,4 @@
 from datetime import date
-
 from pydantic import BaseModel
 
 
@@ -7,8 +6,8 @@ class BookingBase(BaseModel):
     code: str
     price: int
     wishes: list[str]
-    start: date
-    end: date
+    start_date: date
+    end_date: date
 
 
 class BookingCreate(BookingBase):
