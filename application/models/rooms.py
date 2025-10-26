@@ -13,8 +13,8 @@ class RoomsORM(Base):
     beds: Mapped[int]
     bookings: Mapped[list["BookingsORM"]] = relationship(back_populates="room")
 
-    __table_args__ = (
-        CheckConstraint(
-            "grade in ('standard', 'luxe', 'president')", "CHK_grade_valid"
-        ),
-    )
+    # __table_args__ = (
+    #     CheckConstraint(
+    #         "grade in ('standard', 'luxe', 'president')", "CHK_grade_valid"
+    #     ),
+    # )

@@ -13,12 +13,12 @@ class UsersORM(Base):
     mail: Mapped[str]
     bookings: Mapped[list["BookingsORM"]] = relationship(back_populates="user")
 
-    __table_args__ = (
-        CheckConstraint(
-            "phone LIKE '+7__________' or phone LIKE '8__________'",
-            "CHK_user_phone_valid",
-        ),
-        CheckConstraint(
-            "mail LIKE '%@gmail.com' or mail LIKE '%@mail.ru'", "CHK_mail_valid"
-        ),
-    )
+    # __table_args__ = (
+    #     CheckConstraint(
+    #         "phone LIKE '+7__________' or phone LIKE '8__________'",
+    #         "CHK_user_phone_valid",
+    #     ),
+    #     CheckConstraint(
+    #         "mail LIKE '%@gmail.com' or mail LIKE '%@mail.ru'", "CHK_mail_valid"
+    #     ),
+    # )

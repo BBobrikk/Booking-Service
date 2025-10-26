@@ -1,8 +1,9 @@
-from sqlalchemy import select
+from datetime import date
+
+from sqlalchemy import select, and_
 from sqlalchemy.ext.asyncio import AsyncSession
 from application.models import BookingsORM
 from application.models import RoomsORM
-from application.schemas.bookingDto import BookingBase
 from application.schemas.roomDto import RoomBase
 
 
@@ -22,15 +23,14 @@ async def get_room(session: AsyncSession, room_id: int):
     return room
 
 
-async def get_available_rooms(session: AsyncSession, booking_data: BookingBase):
+async def get_available_rooms(session: AsyncSession, booking_date : date):
     query = (
         select(RoomsORM)
-        .join(BookingsORM.room_id, RoomsORM.room_id)
-        .filter(booking_data.end_date > BookingsORM.start_date)
+        .join(BookingsORM, BookingsORM.room_id == RoomsORM.room_id)
+        .filter(booking_date > BookingsORM.end_date)
     )
-    bookings = await session.execute(query)
-    return bookings.scalars().all()
-
+    rooms = await session.execute(query)
+    return rooms.scalars().all()
 
 async def del_room(session: AsyncSession, room_id):
     room = await get_room(session, room_id)

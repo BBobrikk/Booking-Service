@@ -35,6 +35,7 @@ async def remove_user(session: AsyncSession, user_id: int):
     user = await get_user(session, user_id)
     if user:
         await del_user(session, user_id)
-    raise ValueError("Пользователь не найден")
+    else:
+        raise ValueError("Пользователь не найден")
 
 

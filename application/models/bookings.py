@@ -18,7 +18,7 @@ class BookingsORM(Base):
     user: Mapped["UsersORM"] = relationship(back_populates="bookings")
     room: Mapped["RoomsORM"] = relationship(back_populates="bookings")
 
-    __table_args__ = (
-        CheckConstraint("start_date <= end_date", "CHK_date_valid"),
-        CheckConstraint("price > 0", "CHK_price_valid"),
-    )
+    # __table_args__ = (
+    #     CheckConstraint("start_date <= end_date", "CHK_date_valid"),
+    #     CheckConstraint("price > 0", "CHK_price_valid"),
+    # )

@@ -1,3 +1,4 @@
+from datetime import date
 from sqlalchemy.ext.asyncio import AsyncSession
 from application.repositories.room_repo import (
     del_room,
@@ -8,8 +9,6 @@ from application.repositories.room_repo import (
     get_room_by_grade,
     get_room_by_number
 )
-
-from application.schemas.bookingDto import BookingBase
 from application.schemas.roomDto import RoomBase
 
 
@@ -19,14 +18,14 @@ async def check_rooms(session: AsyncSession):
         return rooms
     raise ValueError("Номера не найдены")
 
-async def check_available_room(session : AsyncSession, booking_data : BookingBase):
+async def check_available_room(session : AsyncSession, booking_data : date):
     rooms = await get_available_rooms(session, booking_data)
     if rooms:
         return rooms
     raise ValueError("Нет доступных номеров")
 
-async def check_room(session : AsyncSession, room_id):
-    room = await get_room(session, room_id)
+async def check_room(session : AsyncSession, room_number : int):
+    room = await get_room_by_number(session, room_number)
     if room:
         return room
     raise ValueError("Номер не найден")
@@ -41,6 +40,8 @@ async def remove_room(session : AsyncSession, room_id : int):
     room = await get_room(session, room_id)
     if room:
         await del_room(session, room_id)
+    else:
+        raise ValueError("Номер не найден")
 
 async def check_grade_rooms(session : AsyncSession, grade : str):
     rooms = await get_room_by_grade(session, grade)

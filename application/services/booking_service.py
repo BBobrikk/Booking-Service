@@ -8,19 +8,18 @@ from application.repositories.bookings_repo import (
     get_user_bookings,
     delete_booking,
     get_booking,
-    get_all_bookings
+    get_all_bookings, get_booking_by_code
 )
-from application.repositories.room_repo import get_available_rooms
+
 
 
 async def book_room(session: AsyncSession, booking_data: BookingCreate):
-    available = await get_available_rooms(session, booking_data)
-    if available:
-        for room in available:
-            if room.room_id == booking_data.room_id:
-                await add_booking(session, booking_data)
-    else:
+    booking = await get_booking_by_code(session, booking_data.code)
+    if booking:
         raise ValueError("Комната не доступна для бронирования")
+    await add_booking(session, booking_data)
+
+
 
 
 async def cancel_booking(session: AsyncSession, booking_id: int):
