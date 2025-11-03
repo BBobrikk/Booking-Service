@@ -17,4 +17,10 @@ class RoomsORM(Base):
     #     CheckConstraint(
     #         "grade in ('standard', 'luxe', 'president')", "CHK_grade_valid"
     #     ),
+    #     CheckConstraint(
+    #         "number > 0 ", "CHK_number_valid"
+    #     ),
+    #     CheckConstraint(
+    #         "beds between 1 and 4", "CHK_beds_valid"
+    #              )
     # )

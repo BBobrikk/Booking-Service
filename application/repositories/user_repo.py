@@ -26,7 +26,7 @@ async def del_user(session: AsyncSession, user_id):
     await session.delete(user)
 
 
-async def get_user_by_name(session: AsyncSession, user_name : str):
+async def get_user_by_name(session: AsyncSession, user_name: str):
     query = select(UsersORM).filter(UsersORM.name == user_name)
     user = await session.execute(query)
     return user.scalars().all()

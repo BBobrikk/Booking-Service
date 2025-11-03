@@ -28,9 +28,11 @@ async def get_booking_by_code(session: AsyncSession, booking_code: str):
     result = await session.execute(query)
     return result.scalars().all()
 
-async def get_booking(session : AsyncSession, booking_id : int):
+
+async def get_booking(session: AsyncSession, booking_id: int):
     booking = await session.get(BookingsORM, booking_id)
     return booking
+
 
 async def delete_booking(session: AsyncSession, booking_id: int):
     booking = await get_booking(session, booking_id)

@@ -1,6 +1,5 @@
 from datetime import date
-
-from sqlalchemy import select, and_
+from sqlalchemy import select, or_
 from sqlalchemy.ext.asyncio import AsyncSession
 from application.models import BookingsORM
 from application.models import RoomsORM
@@ -23,25 +22,30 @@ async def get_room(session: AsyncSession, room_id: int):
     return room
 
 
-async def get_available_rooms(session: AsyncSession, booking_date : date):
+async def get_available_rooms(session: AsyncSession, booking_date: date):
     query = (
         select(RoomsORM)
-        .join(BookingsORM, BookingsORM.room_id == RoomsORM.room_id)
-        .filter(booking_date > BookingsORM.end_date)
+        .outerjoin(BookingsORM, BookingsORM.room_id == RoomsORM.room_id)
+        .filter(
+            or_(booking_date > BookingsORM.end_date, BookingsORM.booking_id == None)
+        )
     )
     rooms = await session.execute(query)
     return rooms.scalars().all()
+
 
 async def del_room(session: AsyncSession, room_id):
     room = await get_room(session, room_id)
     await session.delete(room)
 
-async def get_room_by_grade(session : AsyncSession, grade : str):
+
+async def get_room_by_grade(session: AsyncSession, grade: str):
     query = select(RoomsORM).filter(RoomsORM.grade == grade)
     rooms = await session.execute(query)
     return rooms.scalars().all()
 
-async def get_room_by_number(session : AsyncSession, room_number : int):
+
+async def get_room_by_number(session: AsyncSession, room_number: int):
     query = select(RoomsORM).filter(RoomsORM.number == room_number)
     room = await session.execute(query)
     return room.scalars().all()

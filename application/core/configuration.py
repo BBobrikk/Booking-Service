@@ -14,8 +14,8 @@ class Settings(BaseSettings):
     password: str
 
     model_config = SettingsConfigDict(
-        env_file=BASE_DIR / ".env",
-        env_file_encoding="utf-8")
+        env_file=BASE_DIR / ".env", env_file_encoding="utf-8"
+    )
 
     def ASYNC_ENGINE_CREATE(self):
         return f"postgresql+asyncpg://{self.user}:{self.password}@{self.host}:{self.port}/{self.db}"

@@ -3,6 +3,7 @@ from sqlalchemy import CheckConstraint, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from application.core.connection import Base
 
+
 class BookingsORM(Base):
 
     __tablename__ = "Bookings"
