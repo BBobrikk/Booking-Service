@@ -32,7 +32,7 @@ async def booking(session: SessionDep, booking_id: int):
         raise HTTPException(status_code=404, detail=str(er))
 
 
-@booking_router.get("/user/{user_id}", response_model=list[BookingRead])
+@booking_router.get("/{user_id}", response_model=list[BookingRead])
 async def user_bookings(session: SessionDep, user_id: int):
     try:
         result = await check_user_bookings(session, user_id)
@@ -41,7 +41,7 @@ async def user_bookings(session: SessionDep, user_id: int):
         raise HTTPException(status_code=404, detail=str(er))
 
 
-@booking_router.post("/create")
+@booking_router.post("")
 async def add_booking(session: SessionDep, booking_data: BookingCreate):
     try:
         await book_room(session, booking_data)
@@ -50,7 +50,7 @@ async def add_booking(session: SessionDep, booking_data: BookingCreate):
         raise HTTPException(status_code=422, detail=str(er))
 
 
-@booking_router.delete("/remove")
+@booking_router.delete("/booking_id")
 async def del_booking(session: SessionDep, booking_id: int):
     try:
         await cancel_booking(session, booking_id)

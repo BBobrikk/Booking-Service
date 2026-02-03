@@ -33,7 +33,7 @@ async def room(session: SessionDep, room_number: int):
         raise HTTPException(status_code=404, detail=str(er))
 
 
-@room_router.get("/available/{booking_start}", response_model=list[RoomRead])
+@room_router.get("/{booking_start}", response_model=list[RoomRead])
 async def available_rooms(session: SessionDep, booking_start: date):
     try:
         result = await check_available_room(session, booking_start)
@@ -42,7 +42,7 @@ async def available_rooms(session: SessionDep, booking_start: date):
         raise HTTPException(status_code=404, detail=str(er))
 
 
-@room_router.get("/grade/{grade}", response_model=list[RoomRead])
+@room_router.get("/{grade}", response_model=list[RoomRead])
 async def grade_rooms(session: SessionDep, grade: str):
     try:
         result = await check_grade_rooms(session, grade)
@@ -51,7 +51,7 @@ async def grade_rooms(session: SessionDep, grade: str):
         raise HTTPException(status_code=404, detail=str(er))
 
 
-@room_router.post("/create")
+@room_router.post("")
 async def add_room(session: SessionDep, room_data: RoomBase):
     try:
         await create_room(session, room_data)
@@ -60,7 +60,7 @@ async def add_room(session: SessionDep, room_data: RoomBase):
         raise HTTPException(status_code=422, detail=str(er))
 
 
-@room_router.delete("/remove")
+@room_router.delete("/room_id")
 async def del_room(session: SessionDep, room_id: int):
     try:
         await remove_room(session, room_id)
