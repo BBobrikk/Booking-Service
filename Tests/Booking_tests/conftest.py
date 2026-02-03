@@ -5,7 +5,6 @@ import pytest
 from datetime import date
 
 
-date(year=2025, month=11, day=5)
 room = RoomsORM(number=1, grade="standard", beds=1)
 user = UsersORM(name="Arthur Morgan", phone="+77777777777", mail="test1@mail.ru")
 bookings = [
